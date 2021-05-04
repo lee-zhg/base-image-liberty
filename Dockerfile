@@ -1,12 +1,22 @@
-FROM ibmcom/websphere-traditional:latest-ubi
+FROM openliberty/open-liberty:kernel-slim-java8-openj9-ubi
 
-# put app and scripts and properties in /work/config
-# put external library (e.g db driver) in /work/config/lib
-# COPY --chown=was:root {$APPLICATION_BINARY} /work/config/{APPLICATION_BINARY}
-COPY --chown=was:root ./src/config /work/config
-COPY --chown=was:root ./lib /work/config/lib
+ARG TLS=true
 
-ENV PORT 9080
-EXPOSE 9080
+# This script will add the requested XML snippets to enable Liberty features and grow image to be fit-for-purpose using featureUtility.
+# Only available in 'kernel-slim'. The 'full' tag already includes all features for convenience.
+RUN features.sh
 
-RUN /work/configure.sh
+# Add interim fixes (optional)
+# COPY --chown=1001:0  interim-fixes /opt/ol/fixes/
+
+# This script will add the requested server configurations, apply any interim fixes and populate caches to optimize runtime
+RUN configure.sh
+
+# Upgrade to production license if URL to JAR provided
+ARG LICENSE_JAR_URL
+RUN \
+   if [ $LICENSE_JAR_URL ]; then \
+     wget $LICENSE_JAR_URL -O /tmp/license.jar \
+     && java -jar /tmp/license.jar -acceptLicense /opt/ibm \
+     && rm /tmp/license.jar; \
+   fi
