@@ -1,7 +1,7 @@
 ignored:
-  - DL3000
   - SC1010
   - DL3045
+  - DL3047
 
 trustedRegistries:
   - docker.io
