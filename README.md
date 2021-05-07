@@ -144,7 +144,7 @@ The steps in this section creates Tekton tasks, pipeline and etc in your namespa
 
 1. When prompted, select if you `Enable the pipeline to lint the Dockerfile for best practices?`
 
-1. The `cloud native toolkit` takes your inputs, and create Tekton pipeline and associated resources in your namespace which `base-image-github`.
+1. The `cloud native toolkit` takes your inputs, and create Tekton pipeline and associated resources in your namespace which is `base-image-github` by default.
 
     ```
     kb-base-image-liberty % oc pipeline -n base-image-github https://github.com/lee-zhg/base-image-liberty --tekton --pipeline ibm-java-maven
@@ -216,6 +216,8 @@ Now, the tekton pipeline and associated resources are ready to help create your 
     tkn pipelinerun logs base-image-liberty-run-5fwqn -f -n base-image-github
     ```
 
+    >Note: the above command should complete with exit code 0.
+
     >Note: replace `base-image-liberty-run-5fwqn` with your PipelineRun ID.
 
 
@@ -244,7 +246,10 @@ This repo uses the internal OpenShift registry to store your custom Base Java Co
 1. In the above example output, `base-image-github/base-image-liberty` is the container image in the interanl OpenShift registry. `0.0.5` is the image tag of the latest image. So, the example container image locates at 
 
     ```
-    $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    export MY_BASE_IMAGE=$REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    echo $MY_BASE_IMAGE
+
+    default-route-openshift-image-registry.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/base-image-github/base-image-liberty:0.0.5
     ```
 
 1. Take note of your container image information as you will need it as the base image when you create container image of your business applications. Your image may have different path and tag.
@@ -265,7 +270,7 @@ The steps below help verify your custom Base Java Container Image.
     - validation of your custom Base Java Container Image stored in the internal OpenShift registry
 
     ```
-    docker pull $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    docker pull $MY_BASE_IMAGE
     ```
 
 1. Verify that your custom Base Java Container Image is available locally.
@@ -279,7 +284,9 @@ The steps below help verify your custom Base Java Container Image.
 1. Run your custom Base Java Container Image locally.
 
     ```
-    docker run --name my-liberty-container -d -p 9080:9080 $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    docker run --name my-liberty-container -d -p 9080:9080 $MY_BASE_IMAGE
+
+    dd5d0f9e55f3f742abd6ca7ec6bbb6e7d375bcddb0d664b466aa539f97c7471d
     ```
 
 1. Verify that the container is started locally.
@@ -326,13 +333,13 @@ The steps below help verify your custom Base Java Container Image.
 1. Remove container image locally.
 
     ```
-    docker image rm $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    docker image rm $MY_BASE_IMAGE
     ```
 
 1. Verify that the container image was removed successfully.
 
     ```
-    docker image inspect $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    docker image inspect $MY_BASE_IMAGE
 
     Error: No such image: default-route-openshift-image-registry.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/base-image-github/base-image-liberty:0.0.5
     ```
