@@ -33,7 +33,7 @@ Installation instruction of `Cloud-native toolkit` is available at https://cloud
 You will create your custom base Java container image in a OpenShift cluster running in IBM Cloud environment. 
 
 
-### Step 1 - Set up local development environment
+### Step 1. Set up local development environment
 
 CLI tools of various open source projects will be used while creating your base container image. 
 
@@ -82,7 +82,7 @@ The following tools are included in the shell installer:
     oc sync --version
     ```
 
-### Step 2 - Clone the repo
+### Step 2. Clone the repo
 
 1. Setup environment variable.
 
@@ -98,7 +98,7 @@ The following tools are included in the shell installer:
     cd kb-base-image-liberty
     ```
 
-### Step 3 - Login to OpenShift cluster
+### Step 3. Login to OpenShift cluster
 
 1. Login to OpenShift cluster in the same terminal window. The `oc login` command can be obtained on your OpenShift console. Sample login command
 
@@ -106,7 +106,7 @@ The following tools are included in the shell installer:
     oc login --token=sha256~QzR1kT6yaloEUmf4-95r1QELWpoWg8pc1 --server=https://c100-e.us-south.containers.cloud.ibm.com:31574
     ```
 
-### Step 4 - Create namespace `base-image-github`
+### Step 4. Create namespace `base-image-github`
 
 1. `oc sync` command create a new namespace and also clone a few other resources from the cloud native toolkit deployment.
 
@@ -122,7 +122,7 @@ The following tools are included in the shell installer:
     Setting current project to base-image-github
     ```
 
-### Step 5 - Create Telton Pipeline and associated tasks
+### Step 5. Create Telton Pipeline and associated tasks
 
 The steps in this section creates Tekton tasks, pipeline and etc in your namespace from the cloud native toolkit templates.
 
@@ -179,7 +179,7 @@ The steps in this section creates Tekton tasks, pipeline and etc in your namespa
         View PipelineRun - https://console-openshift-console.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/k8s/ns/base-image-github/tekton.dev~v1beta1~PipelineRun/base-image-liberty-1794761aa46
     ```
 
-### Step 6 - Configure your pipeline
+### Step 6. Configure your pipeline
 
 The Tekton tasks, pipeline and etc in your namespace are the clone of the cloud native toolkit templates. Couple of changes are required before you can create your base container image successfully. 
 
@@ -196,7 +196,7 @@ The Tekton tasks, pipeline and etc in your namespace are the clone of the cloud 
     ```
 
 
-### Step 7 - Create your custom Base Java Container Image from Open Liberty
+### Step 7. Create your custom Base Java Container Image from Open Liberty
 
 Now, the tekton pipeline and associated resources are ready to help create your custom Base Java Container Image from Open Liberty.
 
@@ -219,7 +219,7 @@ Now, the tekton pipeline and associated resources are ready to help create your 
     >Note: replace `base-image-liberty-run-5fwqn` with your PipelineRun ID.
 
 
-### Step 8 - Locate your custom Base Java Container Image
+### Step 8. Locate your custom Base Java Container Image
 
 This repo uses the internal OpenShift registry to store your custom Base Java Container Image. After the Tekton pipeline completes its execution in the section above, your custom Base Java Container Image is ready.
 
@@ -250,7 +250,7 @@ This repo uses the internal OpenShift registry to store your custom Base Java Co
 1. Take note of your container image information as you will need it as the base image when you create container image of your business applications. Your image may have different path and tag.
 
 
-### Step 9 - Verify your custom Base Java Container Image
+### Step 9. Verify your custom Base Java Container Image
 
 The steps below help verify your custom Base Java Container Image.
 
