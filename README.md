@@ -87,7 +87,7 @@ The following tools are included in the shell installer:
 1. Setup environment variable.
 
     ```
-    export GIT_URL=https://github.com/lee-zhg/kb-base-image-liberty
+    export GIT_URL=https://github.com/lee-zhg/base-image-liberty
     ```
 
 1. Clone the repo locally.
@@ -95,7 +95,7 @@ The following tools are included in the shell installer:
     ```
     git clone $GIT_URL
 
-    cd kb-base-image-liberty
+    cd base-image-liberty
     ```
 
 ### Step 3. Login to OpenShift cluster
