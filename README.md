@@ -106,13 +106,84 @@ The following tools are included in the shell installer:
 
     ```
     oc sync base-image-github
+
+    Setting up namespace base-image-github
+    Setting up namespace: base-image-github
+    Checking for existing project: base-image-github
+    Creating project: base-image-github
+    Copying ConfigMaps
+    Copying Secrets
+    Setting current project to base-image-github
     ```
 
 ### Step 5 - Create Telton Pipeline and associated tasks
 
+1. Create the new Tekton pipeline for creating your custom base container image.
+
     ```
     oc pipeline -n base-image-github https://github.com/lee-zhg/base-image-liberty --tekton --pipeline ibm-java-maven
     ```
+    - base-image-github - is the namespace in your OpenShift cluster.
+    - https://github.com/lee-zhg/base-image-liberty - is the github repo url.
+    - tekton - you are creating a tekton pipeline.
+    - pipeline ibm-java-maven - is the pipeline template used to create your new pipeline.
+
+1. When prompted, enter your `git username`.
+
+1. When prompted, enter your `git password` or `personal access token`. `Git personal access token` is preferred for security reason.
+
+1. When prompted, select if you `Enable the pipeline to scan the image for vulnerabilities?`
+
+1. When prompted, select if you `Enable the pipeline to lint the Dockerfile for best practices?`
+
+1. The `cloud native toolkit` takes your inputs, and create Tekton pipeline and associated resources in your namespace which `base-image-github`.
+
+    ```
+    kb-base-image-liberty % oc pipeline -n base-image-github https://github.com/lee-zhg/base-image-liberty --tekton --pipeline ibm-java-maven
+
+    Creating pipeline on openshift cluster in base-image-github namespace
+    Retrieving git parameters
+    Project git repo: https://github.com/lee-zhg/base-image-liberty.git
+    ? Provide the git username: lee-zhg
+    ? Provide the git password or personal access token: [hidden]
+    Branch: master
+    Retrieving available template pipelines from tools
+    ? scan-image: Enable the pipeline to scan the image for vulnerabilities? Yes
+    ? lint-dockerfile: Enable the pipeline to lint the Dockerfile for best practices? Yes
+    Copying tasks from tools
+    Copied Pipeline from tools/ibm-java-maven to base-image-github/base-image-liberty
+    Creating TriggerTemplate for pipeline: base-image-liberty
+    Creating TriggerBinding for pipeline: base-image-liberty
+    Creating/updating TriggerEventListener for pipeline: tekton
+    Creating new event listener
+    Waiting for event listener rollout: base-image-github/el-tekton
+    Creating/updating Route for pipeline: tekton
+    Creating PipelineRun for pipeline: base-image-liberty
+    Creating Github webhook for repo: https://github.com/lee-zhg/base-image-liberty.git
+
+    Pipeline run started: base-image-liberty-1794761aa46
+
+    Next steps:
+    Tekton cli:
+        View PipelineRun info - tkn pr describe base-image-liberty-1794761aa46
+        View PipelineRun logs - tkn pr logs -f base-image-liberty-1794761aa46
+    OpenShift console:
+        View PipelineRun - https://console-openshift-console.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/k8s/ns/base-image-github/tekton.dev~v1beta1~PipelineRun/base-image-liberty-1794761aa46
+    ```
+
+### Step 6 - Configure your pipeline
+
+1. Configure your Tekton pipeline.
+
+    ```
+    oc apply -f config/base-image-liberty-pipeline.yaml
+    ```
+
+### Step 7 - Start your pipeline
+
+1. You can create you 
+
+
 
 
 
