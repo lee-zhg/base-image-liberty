@@ -268,6 +268,14 @@ The steps below help verify your custom Base Java Container Image.
     docker pull $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
     ```
 
+1. Verify that your custom Base Java Container Image is available locally.
+
+    ```
+    docker image ls
+
+    default-route-openshift-image-registry.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/base-image-github/base-image-liberty
+    ```
+
 1. Run your custom Base Java Container Image locally.
 
     ```
@@ -298,6 +306,36 @@ The steps below help verify your custom Base Java Container Image.
 
     The command output show that your container is running as the default user.
 
+
+### Step 10. Cleanup
+
+1. Stop and remove the container.
+
+    ```
+    docker container rm my-liberty-container --force
+    ```
+
+1. Verify that the container was removed.
+
+    ```
+    docker container inspect my-liberty-container 
+
+    Error: No such container: my-liberty-container
+    ```
+
+1. Remove container image locally.
+
+    ```
+    docker image rm $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+    ```
+
+1. Verify that the container image was removed successfully.
+
+    ```
+    docker image inspect $REGISTRY_HOST/base-image-github/base-image-liberty:0.0.5
+
+    Error: No such image: default-route-openshift-image-registry.leez-roks-aiops-6ccd7f378ae819553d37d5f2ee142bd6-0000.us-south.containers.appdomain.cloud/base-image-github/base-image-liberty:0.0.5
+    ```
 
 
 ## More Details
