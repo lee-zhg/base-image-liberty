@@ -7,7 +7,10 @@ This custom base Java container image provides a uniformed starting point for de
 
 You are going to create your base image via a tekton pipeline deployed in OpenShift cluster. The pipeline helps you create the base image through a series of tasks.
 - setup
+- dockerfile-lint
 - build
+- deploy-4-health-check
+- health-check
 - tag-release
 - img-release
 - img-scan
