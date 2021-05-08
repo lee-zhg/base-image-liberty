@@ -6,6 +6,7 @@ In this sample repo, you will create your custom base Java container image from 
 This custom base Java container image provides a uniformed starting point for deploying Java applications running on [Open Liberty](https://openliberty.io/) in your organization. 
 
 You are going to create your base image via a tekton pipeline deployed in OpenShift cluster. The pipeline helps you create the base image through a series of tasks.
+
 - setup
 - dockerfile-lint
 - build
@@ -25,6 +26,7 @@ You can add, remove and modify the tasks in the sample pipeline based on your re
 ## Pre-requisites
 
 This repo was based on the [Cloud-native toolkit](https://cloudnativetoolkit.dev). 
+
 - `Cloud-native toolkit` must be deployed in your OpenShift cluster. 
 - `Cloud-native toolkit CLI` must be installed in your terminal/command window environment
 
@@ -60,7 +62,6 @@ The following tools are included in the shell installer:
 
     ```
     curl -sL shell.cloudnativetoolkit.dev | bash - 
-    
     source ~/.bashrc || source ~/.zshrc
     ```
 
@@ -97,7 +98,6 @@ The following tools are included in the shell installer:
 
     ```
     git clone $GIT_URL
-
     cd base-image-liberty
     ```
 
